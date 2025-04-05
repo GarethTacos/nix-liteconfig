@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, nixos-conf-editor, ... }:
+{ config, pkgs, ... }:
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -16,34 +16,6 @@
   networking.hostName = "stupidfortress"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #overlay opts
-nixpkgs.overlays = [
-  (self: super: {
-    ccacheWrapper = super.ccacheWrapper.override {
-      extraConfig = ''
-        export CCACHE_COMPRESS=1
-        export CCACHE_DIR="${config.programs.ccache.cacheDir}"
-        export CCACHE_UMASK=007
-        if [ ! -d "$CCACHE_DIR" ]; then
-          echo "====="
-          echo "Directory '$CCACHE_DIR' does not exist"
-          echo "Please create it with:"
-          echo "  sudo mkdir -m0770 '$CCACHE_DIR'"
-          echo "  sudo chown root:nixbld '$CCACHE_DIR'"
-          echo "====="
-          exit 1
-        fi
-        if [ ! -w "$CCACHE_DIR" ]; then
-          echo "====="
-          echo "Directory '$CCACHE_DIR' is not accessible for user $(whoami)"
-          echo "Please verify its access permissions"
-          echo "====="
-          exit 1
-        fi
-      '';
-    };
-  }) 
-];
-nix.settings.extra-sandbox-paths = [ config.programs.ccache.cacheDir ];
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
@@ -89,13 +61,10 @@ nix.settings.extra-sandbox-paths = [ config.programs.ccache.cacheDir ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # caches
-  programs.ccache.enable = true;
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-  nixos-conf-editor.packages.${system}.nixos-conf-editor
-  sonicpi
+  sonic-pi
   gammastep
   # leave the android-tools here incase phon broken again and remove comment if u need
   android-tools
