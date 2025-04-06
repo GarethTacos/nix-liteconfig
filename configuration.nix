@@ -11,7 +11,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
+  # for encryptions
   boot.initrd.luks.devices."luks-524c03e3-a7a5-4e67-b29e-7efcdfcd452b".device = "/dev/disk/by-uuid/524c03e3-a7a5-4e67-b29e-7efcdfcd452b";
   networking.hostName = "stupidfortress"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -135,20 +135,20 @@
    options = "--delete-older-than 1d";
   };
   # save power and prevent PLD from toastering
-  services.thermald.enable = true;
-  services.auto-cpufreq  = {
-   enable = true;
-   settings = {
-    battery = {
-     governor = "powersave";
-     turbo = "never";
-    };
-    charger = {
-     governor = "performance";
-     turbo = "auto";
-    };
-   };
-  };
+  #services.thermald.enable = true;
+  #services.auto-cpufreq  = {
+  # enable = true;
+  # settings = {
+  #  battery = {
+  #   governor = "powersave";
+  #   turbo = "never";
+  #  };
+  #  charger = {
+  #   governor = "performance";
+  #   turbo = "auto";
+  #  };
+  # };
+  #};
   # frosted flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
   # sway the shitden
