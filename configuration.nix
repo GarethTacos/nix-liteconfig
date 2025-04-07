@@ -64,6 +64,8 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+  pv
+  lime3ds
   sonic-pi
   gammastep
   # leave the android-tools here incase phon broken again and remove comment if u need
@@ -135,20 +137,20 @@
    options = "--delete-older-than 1d";
   };
   # save power and prevent PLD from toastering
-  #services.thermald.enable = true;
-  #services.auto-cpufreq  = {
-  # enable = true;
-  # settings = {
-  #  battery = {
-  #   governor = "powersave";
-  #   turbo = "never";
-  #  };
-  #  charger = {
-  #   governor = "performance";
-  #   turbo = "auto";
-  #  };
-  # };
-  #};
+  services.thermald.enable = true;
+  services.auto-cpufreq  = {
+   enable = true;
+   settings = {
+    battery = {
+     governor = "powersave";
+     turbo = "never";
+    };
+    charger = {
+     governor = "performance";
+     turbo = "auto";
+    };
+   };
+  };
   # frosted flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
   # sway the shitden
