@@ -12,8 +12,8 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   # for encryptions
-  boot.initrd.luks.devices."luks-524c03e3-a7a5-4e67-b29e-7efcdfcd452b".device = "/dev/disk/by-uuid/524c03e3-a7a5-4e67-b29e-7efcdfcd452b";
-  networking.hostName = "stupidfortress"; # Define your hostname.
+  #boot.initrd.luks.devices."luks-524c03e3-a7a5-4e67-b29e-7efcdfcd452b".device = "/dev/disk/by-uuid/524c03e3-a7a5-4e67-b29e-7efcdfcd452b";
+  networking.hostName = "holopockylab"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #overlay opts
   # Configure network proxy if necessary
@@ -48,9 +48,9 @@
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.bananachacha = {
+  users.users.holopocket = {
     isNormalUser = true;
-    description = "bananachacha";
+    description = "holopocket";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
     shell = pkgs.fish;
@@ -80,7 +80,6 @@
   direnv
   p7zip-rar
   pavucontrol
-  jamesdsp
   brightnessctl
   wofi
   neovim
@@ -100,6 +99,7 @@
   #asciiquarium (rarely use so commented this)
   tmux
   steam # for infinite toes 2
+  swayfx
   ];
   programs.fish.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
@@ -162,8 +162,8 @@
    security.pam.loginLimits = [
     { domain = "@users"; item = "rtprio"; type = "-"; value = 99; }
    ];
-   # andwoid :D
-   virtualisation.waydroid.enable = true;
+   # andwoid :D (disabled because no need currently)
+   #virtualisation.waydroid.enable = true;
 # metal pipe audio
 security.rtkit.enable = true;
 services.pipewire = {
@@ -245,5 +245,9 @@ programs.steam = {
   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
 };
-
+#swapfile because easier
+ swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 8*1024;
+  } ];
 }
