@@ -68,6 +68,7 @@
   lime3ds
   sonic-pi
   gammastep
+  easyeffects
   # leave the android-tools here incase phon broken again and remove comment if u need
   android-tools
   speedcrunch
@@ -75,6 +76,7 @@
   zip
   unzip
   element-desktop
+  thunderbird
   ntfs3g
   libreoffice
   direnv
@@ -172,7 +174,7 @@ services.pipewire = {
   alsa.support32Bit = true;
   pulse.enable = true;
   # If you want to use JACK applications, uncomment this
-  #jack.enable = true;
+  jack.enable = true;
 };
 # dont do lanya yet because save power but can make custom script to enable lanya
 # nerd ahh fonts
