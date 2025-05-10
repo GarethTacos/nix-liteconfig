@@ -65,7 +65,8 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   pv
-  lime3ds
+  android-file-transfer
+  #lime3ds
   sonic-pi
   gammastep
   easyeffects
@@ -100,8 +101,14 @@
   fzf
   #asciiquarium (rarely use so commented this)
   tmux
-  steam # for infinite toes 2
+  #steam # for infinite toes 2
   swayfx
+  mpv
+  aria2
+  appflowy
+  wineWowPackages.staging
+  wineWowPackages.waylandFull
+  transmission_4-qt
   ];
   programs.fish.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
@@ -165,7 +172,7 @@
     { domain = "@users"; item = "rtprio"; type = "-"; value = 99; }
    ];
    # andwoid :D (disabled because no need currently)
-   #virtualisation.waydroid.enable = true;
+   virtualisation.waydroid.enable = true;
 # metal pipe audio
 security.rtkit.enable = true;
 services.pipewire = {
@@ -181,6 +188,7 @@ services.pipewire = {
 fonts.packages = with pkgs; [
   (nerdfonts.override { fonts = [ "Mononoki" ]; })
   mononoki
+  noto-fonts-cjk-sans
 ];
 boot.kernel.sysctl = {
     "vm.swappiness" = 1; # when swapping to ssd, otherwise change to 1
@@ -217,10 +225,13 @@ boot.kernel.sysctl = {
     IOWeight = 20;
   };
   # change krnl
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  #boot.kernelPackages = pkgs.linuxPackages_zen; 
   # change stuff
+  # Pass F2FS GC options on initial mount via the kernel cmdline because no work on remount
+  # only on first boot
   boot.kernelParams = [
     "elevator=kyber"
+    "rootflags=atgc,gc_merge"
    # Tell kernel to use cgroups_v2 exclusively
    "cgroup_no_v1=all"
    "systemd.unified_cgroup_hierarchy=yes"
@@ -228,28 +239,46 @@ boot.kernel.sysctl = {
    #xdg potal
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  # allow kun
-  systemd.sleep.extraConfig = ''
-  AllowSuspend=yes
-  AllowHibernation=yes
-  AllowHybridSleep=no
-  AllowSuspendThenHibernate=no
-'';
+  # allow kun (disabled because swap no like me)
+#  systemd.sleep.extraConfig = ''
+#  AllowSuspend=yes
+#  AllowHibernation=yes
+#  AllowHybridSleep=no
+#  AllowSuspendThenHibernate=no
+#'';
 hardware.graphics.enable = true;
 # mikrokod
 hardware.cpu.intel.updateMicrocode = true;
 # usb mount
 services.udisks2.enable = true;
 # stem
-programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+#programs.steam = {
+#  enable = true;
+#  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+#  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+#  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+#};
+#swapfile because easier (also disabled because swap no like me)
+# swapDevices = [ {
+#    device = "/var/lib/swapfile";
+#    size = 8*1024;
+#  } ];
+# boot
+# Add kernel modules to be loaded at boot
+boot.kernelModules = [
+  "crc32"
+  "f2fs"
+  "zstd_compress"
+  "kvm-intel"
+];
+# Define root filesystem with f2fs and compression options
+fileSystems."/" = {
+  device = "/dev/disk/by-uuid/dd19aa4e-c3d3-4e36-96ca-d15fad53d9bf";
+  fsType = "f2fs";
+  options = [
+    "compress_algorithm=zstd:22"
+    "compress_chksum"
+    "compress_mode=fs"
+  ];
 };
-#swapfile because easier
- swapDevices = [ {
-    device = "/var/lib/swapfile";
-    size = 8*1024;
-  } ];
 }

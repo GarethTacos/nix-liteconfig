@@ -10,16 +10,25 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" "rtsx_usb_sdmmc" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "crc32" "f2fs" "zstd_compress" "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/41113b40-20f6-4236-b834-2316885709c5";
+    { device = "/dev/disk/by-uuid/dd19aa4e-c3d3-4e36-96ca-d15fad53d9bf";
       fsType = "f2fs";
+     options = [
+     "compress_algorithm=zstd:22"
+     #"rootflags=atgc"
+     #"rw"
+     #"compress_mode=force" (also cause errors)
+     "compress_chksum"
+     #"atgc" (causes errors so no)
+     #"gc_merge" (also cause errors)
+     ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/5C9A-1746";
+    { device = "/dev/disk/by-uuid/C92E-4A8B";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
