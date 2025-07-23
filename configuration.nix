@@ -52,10 +52,13 @@
     isNormalUser = true;
     description = "holopocket";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [
+    ];
     shell = pkgs.fish;
   };
-  
+  # for boobaDS
+  programs.appimage.enable = true;
+  programs.appimage.binfmt = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -64,51 +67,61 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-  pv
   android-file-transfer
-  #lime3ds
-  sonic-pi
-  gammastep
-  easyeffects
+  furnace
+  #easyeffects - > no work
+  jamesdsp
   # leave the android-tools here incase phon broken again and remove comment if u need
-  android-tools
-  speedcrunch
+  android-tools 
+  element-desktop
+  cage
+  librewolf
+  git
+  ncdu
+  fzf
+  mpv
+  # games
+  #superTuxKart
+  #superTux
+  #xonotic
+  #wesnoth
+  # binbows (still shit)
+  # utube
+  freetube
+  # windows shit aint gonna run so yeah...
+  transmission_4-qt
+  #taisei
+  wasistlos
+  p7zip-rar
+  fastfetch
+  librewolf
   teams-for-linux
+  gammastep
+  libreoffice-fresh
   zip
   unzip
-  element-desktop
-  thunderbird
   ntfs3g
-  libreoffice
-  direnv
-  p7zip-rar
   pavucontrol
   brightnessctl
   wofi
-  neovim
-  fastfetch
   btop
+  neovim
   grim
   slurp
   wl-clipboard
   mako
-  cage
-  librewolf
   kitty
   clipman
-  ncdu
-  git
-  fzf
   #asciiquarium (rarely use so commented this)
-  tmux
+  peaclock
   #steam # for infinite toes 2
   swayfx
-  mpv
-  aria2
-  appflowy
-  wineWowPackages.staging
-  wineWowPackages.waylandFull
-  transmission_4-qt
+  ungoogled-chromium
+  # notes
+  direnv
+  joplin-desktop
+  graalvmPackages.graalvm-ce
+  yt-dlp
   ];
   programs.fish.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
@@ -138,6 +151,15 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
   # human error zone:
+  # lanya
+  # laggotron ultra services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Enable = "Source,Sink,Media,Socket";
+    };
+  }; # enables support for Bluetooth
+  hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   # nix store storage optimisations:
   nix.settings.auto-optimise-store = true;
   nix.gc = {
@@ -172,6 +194,8 @@
     { domain = "@users"; item = "rtprio"; type = "-"; value = 99; }
    ];
    # andwoid :D (disabled because no need currently)
+   # and also root detection is screwing me up
+   # stupid thing says i have magisk uds but i didnt install magisk???
    virtualisation.waydroid.enable = true;
 # metal pipe audio
 security.rtkit.enable = true;
@@ -184,11 +208,13 @@ services.pipewire = {
   jack.enable = true;
 };
 # dont do lanya yet because save power but can make custom script to enable lanya
+# nevermind gonna do lanya because yes
 # nerd ahh fonts
 fonts.packages = with pkgs; [
-  (nerdfonts.override { fonts = [ "Mononoki" ]; })
+  nerd-fonts.mononoki
   mononoki
   noto-fonts-cjk-sans
+  aegyptus
 ];
 boot.kernel.sysctl = {
     "vm.swappiness" = 1; # when swapping to ssd, otherwise change to 1
@@ -225,13 +251,15 @@ boot.kernel.sysctl = {
     IOWeight = 20;
   };
   # change krnl
-  #boot.kernelPackages = pkgs.linuxPackages_zen; 
+  boot.kernelPackages = pkgs.linuxPackages_zen; 
   # change stuff
   # Pass F2FS GC options on initial mount via the kernel cmdline because no work on remount
   # only on first boot
   boot.kernelParams = [
     "elevator=kyber"
     "rootflags=atgc,gc_merge"
+    # only when want to game 
+    #"isolcpus=1,3"
    # Tell kernel to use cgroups_v2 exclusively
    "cgroup_no_v1=all"
    "systemd.unified_cgroup_hierarchy=yes"
@@ -246,7 +274,15 @@ boot.kernel.sysctl = {
 #  AllowHybridSleep=no
 #  AllowSuspendThenHibernate=no
 #'';
-hardware.graphics.enable = true;
+hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      vulkan-loader
+      vulkan-validation-layers
+      vulkan-extension-layer
+    ];
+  }; 
 # mikrokod
 hardware.cpu.intel.updateMicrocode = true;
 # usb mount
@@ -281,4 +317,14 @@ fileSystems."/" = {
     "compress_mode=fs"
   ];
 };
+# chinse
+   i18n.inputMethod = {
+     type = "fcitx5";
+     enable = true;
+     fcitx5.addons = with pkgs; [
+       fcitx5-gtk             # alternatively, kdePackages.fcitx5-qt
+       fcitx5-chinese-addons  # table input method support
+       fcitx5-mozc # japanese stuff
+     ];
+     };
 }
