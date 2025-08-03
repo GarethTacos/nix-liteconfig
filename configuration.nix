@@ -69,6 +69,7 @@
   #  wget
   android-file-transfer
   furnace
+  fortune
   #easyeffects - > no work
   jamesdsp
   # leave the android-tools here incase phon broken again and remove comment if u need
@@ -122,6 +123,7 @@
   joplin-desktop
   graalvmPackages.graalvm-ce
   yt-dlp
+  speedcrunch
   ];
   programs.fish.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
@@ -135,7 +137,17 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  #services.fail2ban.enable = true;
+  #services.openssh = {
+  #  enable = true;
+  #  ports = [ 15433 ];
+  #  settings = {
+  #    PasswordAuthentication = true;
+  #    KbdInteractiveAuthentication = false;
+  #    PermitRootLogin = "no";
+  #    AllowUsers = [ "holopocket" ];
+  #  };
+  #};
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
