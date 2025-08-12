@@ -124,6 +124,9 @@
   graalvmPackages.graalvm-ce
   yt-dlp
   speedcrunch
+  # to test windows targeted CLI programs
+  wineWowPackages.full
+  audacity
   ];
   programs.fish.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
