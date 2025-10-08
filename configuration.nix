@@ -61,7 +61,10 @@
   programs.appimage.binfmt = true;
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -70,6 +73,10 @@
   android-file-transfer
   furnace
   fortune
+<<<<<<< HEAD
+=======
+  tree
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
   #easyeffects - > no work
   jamesdsp
   # leave the android-tools here incase phon broken again and remove comment if u need
@@ -81,6 +88,7 @@
   ncdu
   fzf
   mpv
+<<<<<<< HEAD
   # games
   #superTuxKart
   #superTux
@@ -99,6 +107,25 @@
   teams-for-linux
   gammastep
   libreoffice-fresh
+=======
+  proot
+  # games
+  superTuxKart
+  #superTux
+  xonotic
+  #wesnoth
+  # binbows (still shit)
+  # utube
+  # outdated, use appimage freetube
+  # windows shit aint gonna run so yeah...
+  transmission_4-qt
+  #taisei
+  p7zip-rar
+  fastfetch
+  gammastep
+  libreoffice-fresh
+  evince #pdf viewer
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
   zip
   unzip
   ntfs3g
@@ -113,6 +140,7 @@
   mako
   kitty
   clipman
+<<<<<<< HEAD
   #asciiquarium (rarely use so commented this)
   peaclock
   #steam # for infinite toes 2
@@ -127,6 +155,30 @@
   # to test windows targeted CLI programs
   wineWowPackages.full
   audacity
+=======
+  asciiquarium #(rarely use so commented this)
+  peaclock
+  #steam # for infinite toes 2
+  #swayfx
+  sway #just normal sway
+  swaylock
+  # super bar
+  i3status-rust
+  #ungoogled-chromium (just use android lol for better sandboxing)
+  # notes
+  direnv
+  joplin-desktop
+  # I don't use dbs in libreoffice so nah 
+  # graalvmPackages.graalvm-ce
+  yt-dlp
+  ffmpeg
+  speedcrunch
+  audacity
+  tmux
+  bat
+  # figma replacement
+  inkscape-with-extensions
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
   ];
   programs.fish.enable = true;
   # Some programs need SUID wrappers, can be configured further or are
@@ -211,7 +263,11 @@
    # andwoid :D (disabled because no need currently)
    # and also root detection is screwing me up
    # stupid thing says i have magisk uds but i didnt install magisk???
+<<<<<<< HEAD
    virtualisation.waydroid.enable = true;
+=======
+   # virtualisation.waydroid.enable = true;
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
 # metal pipe audio
 security.rtkit.enable = true;
 services.pipewire = {
@@ -226,9 +282,22 @@ services.pipewire = {
 # nevermind gonna do lanya because yes
 # nerd ahh fonts
 fonts.packages = with pkgs; [
+<<<<<<< HEAD
   nerd-fonts.mononoki
   mononoki
   noto-fonts-cjk-sans
+=======
+  #cascadia so ligatures
+  nerd-fonts.caskaydia-cove
+  # noto itself
+  noto-fonts
+  #east asian
+  noto-fonts-cjk-sans
+  #cyrillic
+  noto-fonts-lgc-plus
+  #emojis
+  noto-fonts-color-emoji
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
   aegyptus
 ];
 boot.kernel.sysctl = {
@@ -293,6 +362,10 @@ hardware.graphics = {
     enable = true;
     enable32Bit = true;
     extraPackages = with pkgs; [
+<<<<<<< HEAD
+=======
+      mesa
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
       vulkan-loader
       vulkan-validation-layers
       vulkan-extension-layer
@@ -303,6 +376,10 @@ hardware.cpu.intel.updateMicrocode = true;
 # usb mount
 services.udisks2.enable = true;
 # stem
+<<<<<<< HEAD
+=======
+# proton test was done so no need anymore
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
 #programs.steam = {
 #  enable = true;
 #  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -314,6 +391,24 @@ services.udisks2.enable = true;
 #    device = "/var/lib/swapfile";
 #    size = 8*1024;
 #  } ];
+<<<<<<< HEAD
+=======
+# memswap
+zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50;
+  };
+# virt
+#programs.virt-manager.enable = true;
+
+#users.groups.libvirtd.members = ["holopocket"];
+
+#virtualisation.libvirtd.enable = true;
+
+#virtualisation.spiceUSBRedirection.enable = true;
+
+>>>>>>> 7c3a1eb (new backup because system probably gonna die soon)
 # boot
 # Add kernel modules to be loaded at boot
 boot.kernelModules = [
